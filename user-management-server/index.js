@@ -3,6 +3,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 const cors = require("cors");
 app.use(cors());
+app.use(express.json());
 
 const users = [
   {
@@ -27,8 +28,11 @@ app.get("/", (req, res) => {
 });
 
 app.post("/users", (req, res) => {
-  console.log("Post api hitting");
   console.log(req.body);
+  const newUser = req.body;
+  newUser.id = users.length + 1;
+  users.push(newUser);
+  res.send(newUser);
 });
 
 app.listen(port);
